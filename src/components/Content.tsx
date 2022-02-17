@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { MovieCard } from "./MovieCard";
 
 import { api } from "../services/api";
-
+import { Header } from "./Header";
 interface MovieProps {
   imdbID: string;
   Title: string;
@@ -13,7 +13,6 @@ interface MovieProps {
   }>;
   Runtime: string;
 }
-
 interface GenreResponseProps {
   id: number;
   name: "action" | "comedy" | "documentary" | "drama" | "horror" | "family";
@@ -34,14 +33,10 @@ export function Content({ selectedGenreId, selectedGenre }: ContentProps) {
       .then((response) => {
         setMovies(response.data);
       });
-  }, []);
+  }, [selectedGenreId]);
   return (
     <div className="container">
-      <header>
-        <span className="category">
-          Categoria:<span> {selectedGenre.title}</span>
-        </span>
-      </header>
+      <Header titleHeader={selectedGenre.title} />
 
       <main>
         <div className="movies-list">

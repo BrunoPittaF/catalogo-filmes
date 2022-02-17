@@ -1,5 +1,6 @@
-import { Button } from "./components/Button";
-import { MovieCard } from "../components/MovieCard";
+import { useEffect, useState } from "react";
+import { api } from "../services/api";
+import { Button } from "./Button";
 
 interface GenreResponseProps {
   id: number;
@@ -7,19 +8,20 @@ interface GenreResponseProps {
   title: string;
 }
 
-interface MovieProps {
-  imdbID: string;
-  Title: string;
-  Poster: string;
-  Ratings: Array<{
-    Source: string;
-    Value: string;
-  }>;
-  Runtime: string;
+interface SideBarProps {
+  handleClickButton: (id: number) => void;
+  selectedGenreId: number;
 }
 
-export function SideBar() {
+export function SideBar({ handleClickButton, selectedGenreId }: SideBarProps) {
   // Complete aqui
+  const [genres, setGenres] = useState<GenreResponseProps[]>([]);
+
+  useEffect(() => {
+    api.get<GenreResponseProps[]>("genres").then((response) => {
+      setGenres(response.data);
+    });
+  }, []);
 
   return (
     <nav className="sidebar">

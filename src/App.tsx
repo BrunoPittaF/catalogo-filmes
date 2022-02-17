@@ -19,17 +19,9 @@ interface GenreResponseProps {
 export function App() {
   const [selectedGenreId, setSelectedGenreId] = useState(1);
 
-  const [genres, setGenres] = useState<GenreResponseProps[]>([]);
-
   const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>(
     {} as GenreResponseProps
   );
-
-  useEffect(() => {
-    api.get<GenreResponseProps[]>("genres").then((response) => {
-      setGenres(response.data);
-    });
-  }, []);
 
   useEffect(() => {
     api
@@ -45,7 +37,10 @@ export function App() {
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <SideBar />
+      <SideBar
+        selectedGenreId={selectedGenreId}
+        handleClickButton={handleClickButton}
+      />
       <Content
         selectedGenre={selectedGenre}
         selectedGenreId={selectedGenreId}
